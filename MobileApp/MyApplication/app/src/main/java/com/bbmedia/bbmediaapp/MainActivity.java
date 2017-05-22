@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     public void submit(View view){
         try {
             Intent i = new Intent(this, FileList.class);
-            
             startActivity(i);
         }catch (Exception ex){
             System.out.println(ex);

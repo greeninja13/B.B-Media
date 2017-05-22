@@ -1,4 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">B.B. MediaApp</string>
     <string name="title_activity_file_list">FileList</string>
+    <string-array name="planets_array">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+            <item>Mars</item>
+    </string-array>
+
 </resources>

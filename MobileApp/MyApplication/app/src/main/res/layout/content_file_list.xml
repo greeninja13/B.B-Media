@@ -8,11 +8,10 @@
     tools:context="com.bbmedia.bbmediaapp.FileList"
     tools:showIn="@layout/activity_file_list">
 
-    <TextView
-        android:id="@+id/textView"
+    <ListView
+        android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="File List"
-       android:translationX="144dp"
-        android:translationY="46dp" />
+
+        />
 </android.support.constraint.ConstraintLayout>
