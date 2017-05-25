@@ -3,15 +3,18 @@ package sample;
 import javafx.application.Application;
 
 
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+
 import javafx.stage.Stage;
 
-import java.awt.*;
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +25,7 @@ import java.net.URL;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Pane root = new Pane();
         primaryStage.setTitle("B.B.Media");
         Button SignUp= new Button("Sign Up");
@@ -45,14 +48,20 @@ public class Main extends Application {
         String ip = in.readLine();
         Text IPAddress = new Text("External IP Address: "+ ip);
         IPAddress.setLayoutX(80);
-        IPAddress.setLayoutY(180);
+        IPAddress.setLayoutY(200);
 
 
         Button SelectFile= new Button("Select File");
-        SelectFile.setOnAction(event -> {
+        SelectFile.setOnAction((ActionEvent event) -> {
             try {
-                Runtime.getRuntime().exec("explorer C:\\bin");
-            } catch (IOException e) {
+                //Create a file chooser
+                DirectoryChooser fileChooser = new DirectoryChooser();
+                fileChooser.setTitle("Open Resource File");
+               File file= fileChooser.showDialog(primaryStage);
+
+                Filepath.setText(file.getAbsolutePath());
+                Filepath.setWrappingWidth(250);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -64,7 +73,7 @@ public class Main extends Application {
         pane2.getChildren().add(IPAddress);
 
         Button Login= new Button("Login");
-        Login.setOnAction(event -> primaryStage.setScene(new Scene(pane2,300 ,275)));
+
         Login.setLayoutX(160);
         Login.setLayoutY(275/2);
 
@@ -74,14 +83,39 @@ public class Main extends Application {
         TextField password = new TextField("Password");
         password.setLayoutX(80);
         password.setLayoutY(105);
-
+        Text invalidLogin = new Text("");
+        invalidLogin.setLayoutX(80);
+        invalidLogin.setLayoutY(200);
         root.getChildren().add(userName);
         root.getChildren().add(password);
         root.getChildren().add(SignUp);
         root.getChildren().add(Login);
-        primaryStage.setScene(new Scene(root, 300, 275));
+        root.getChildren().add(invalidLogin);
+        primaryStage.setMinWidth(350);
+;        primaryStage.setScene(new Scene(root, 350, 275));
 
         primaryStage.show();
+        Login.setOnAction(event -> {
+            if(userName.getText().equals("brennan")&&password.getText().equals("test")){
+                primaryStage.setScene(new Scene(pane2, 350, 275));
+            }
+            else {
+                invalidLogin.setText("Wrong Login");
+
+            }
+
+        });
+        SignUp.setOnAction(event -> {
+            if(!userName.getText().equals("brennan")&&!password.getText().equals("test")){
+                //save text
+                invalidLogin.setText("User name and password created");
+            }
+            else {
+                invalidLogin.setText("User name exist");
+
+            }
+
+        });
     }
 
 
