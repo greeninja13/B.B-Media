@@ -20,6 +20,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Stream;
 
 
 public class Main extends Application {
@@ -61,6 +66,10 @@ public class Main extends Application {
 
                 Filepath.setText(file.getAbsolutePath());
                 Filepath.setWrappingWidth(250);
+                try(Stream<Path> paths= Files.walk(Paths.get(file.toURI()))){
+                    paths.filter(Files::isRegularFile).forEach(System.out::println);
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -77,12 +86,14 @@ public class Main extends Application {
         Login.setLayoutX(160);
         Login.setLayoutY(275/2);
 
-        TextField userName = new TextField("User Name");
+        TextField userName = new TextField();
         userName.setLayoutX(80);
         userName.setLayoutY(70);
-        TextField password = new TextField("Password");
+        TextField password = new TextField();
         password.setLayoutX(80);
         password.setLayoutY(105);
+        userName.setPromptText("Username");
+        password.setPromptText("Password");
         Text invalidLogin = new Text("");
         invalidLogin.setLayoutX(80);
         invalidLogin.setLayoutY(200);
