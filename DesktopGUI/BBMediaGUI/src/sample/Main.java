@@ -31,14 +31,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pane root = new Pane();
+        Pane mainPane = new Pane();
         primaryStage.setTitle("B.B.Media");
         Button SignUp= new Button("Sign Up");
 
         SignUp.setLayoutX(80);
         SignUp.setLayoutY(275/2);
 
-        Pane pane2 = new Pane();
+        Pane serverPane = new Pane();
 
 
         Text serverStatus = new Text("ServerStatus: Inactive");
@@ -47,6 +47,8 @@ public class Main extends Application {
         Text Filepath = new Text("File path: NULL");
         Filepath.setLayoutX(80);
         Filepath.setLayoutY(160);
+
+
         URL whatismyip = new URL("http://checkip.amazonaws.com");
         BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 
@@ -56,30 +58,13 @@ public class Main extends Application {
         IPAddress.setLayoutY(200);
 
 
+
         Button SelectFile= new Button("Select File");
-        SelectFile.setOnAction((ActionEvent event) -> {
-            try {
-                //Create a file chooser
-                DirectoryChooser fileChooser = new DirectoryChooser();
-                fileChooser.setTitle("Open Resource File");
-               File file= fileChooser.showDialog(primaryStage);
 
-                Filepath.setText(file.getAbsolutePath());
-                Filepath.setWrappingWidth(250);
-                try(Stream<Path> paths= Files.walk(Paths.get(file.toURI()))){
-                    paths.filter(Files::isRegularFile).forEach(System.out::println);
-                }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
         SelectFile.setLayoutX(80);
         SelectFile.setLayoutY(90);
-        pane2.getChildren().add(SelectFile);
-        pane2.getChildren().add(serverStatus);
-        pane2.getChildren().add(Filepath);
-        pane2.getChildren().add(IPAddress);
+
 
         Button Login= new Button("Login");
 
@@ -89,26 +74,37 @@ public class Main extends Application {
         TextField userName = new TextField();
         userName.setLayoutX(80);
         userName.setLayoutY(70);
+
         TextField password = new TextField();
         password.setLayoutX(80);
         password.setLayoutY(105);
+
         userName.setPromptText("Username");
         password.setPromptText("Password");
+
         Text invalidLogin = new Text("");
         invalidLogin.setLayoutX(80);
         invalidLogin.setLayoutY(200);
-        root.getChildren().add(userName);
-        root.getChildren().add(password);
-        root.getChildren().add(SignUp);
-        root.getChildren().add(Login);
-        root.getChildren().add(invalidLogin);
+
+
+
+        serverPane.getChildren().add(SelectFile);
+        serverPane.getChildren().add(serverStatus);
+        serverPane.getChildren().add(Filepath);
+        serverPane.getChildren().add(IPAddress);
+
+        mainPane.getChildren().add(userName);
+        mainPane.getChildren().add(password);
+        mainPane.getChildren().add(SignUp);
+        mainPane.getChildren().add(Login);
+        mainPane.getChildren().add(invalidLogin);
         primaryStage.setMinWidth(350);
-;        primaryStage.setScene(new Scene(root, 350, 275));
+;        primaryStage.setScene(new Scene(mainPane, 350, 275));
 
         primaryStage.show();
         Login.setOnAction(event -> {
             if(userName.getText().equals("brennan")&&password.getText().equals("test")){
-                primaryStage.setScene(new Scene(pane2, 350, 275));
+                primaryStage.setScene(new Scene(serverPane, 350, 275));
             }
             else {
                 invalidLogin.setText("Wrong Login");
@@ -126,6 +122,23 @@ public class Main extends Application {
 
             }
 
+        });
+        SelectFile.setOnAction((ActionEvent event) -> {
+            try {
+                //Create a file chooser
+                DirectoryChooser fileChooser = new DirectoryChooser();
+                fileChooser.setTitle("Open Resource File");
+                File file= fileChooser.showDialog(primaryStage);
+
+                Filepath.setText(file.getAbsolutePath());
+                Filepath.setWrappingWidth(250);
+                try(Stream<Path> paths= Files.walk(Paths.get(file.toURI()))){
+                    paths.filter(Files::isRegularFile).forEach(System.out::println);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
