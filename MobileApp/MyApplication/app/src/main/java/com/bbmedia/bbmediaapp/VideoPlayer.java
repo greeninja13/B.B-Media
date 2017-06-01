@@ -25,7 +25,7 @@ public class VideoPlayer extends AppCompatActivity {
         screen.
 
 
-        MediaPlayer player = new MediaPlayer();
+         MediaPlayer player = new MediaPlayer();
         try {
             player.setDataSource(this, vidUri);
             player.setDisplay(screen.getHolder());
