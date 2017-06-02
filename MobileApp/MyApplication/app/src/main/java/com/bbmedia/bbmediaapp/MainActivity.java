@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void submit(View view){
         try {
-            Intent i = new Intent(getApplicationContext(), VideoPlayer.class);
+            Intent i = new Intent(getApplicationContext(), FileList.class);
             startActivity(i);
         }catch (Exception ex){
             System.out.println(ex);

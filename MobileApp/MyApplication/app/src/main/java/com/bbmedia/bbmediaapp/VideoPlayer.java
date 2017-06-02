@@ -50,7 +50,8 @@ public class VideoPlayer extends Activity implements SurfaceHolder.Callback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-
+        Intent recievedIntent= getIntent();
+        String file= recievedIntent.getStringExtra("file");
         getWindow().setFormat(PixelFormat.UNKNOWN);
         mPreview = (SurfaceView)findViewById(R.id.Video);
         holder = mPreview.getHolder();
